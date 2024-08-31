@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Selection</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Select a City</h1>
+    <label for="citySelect">Choose a city:</label>
+    <select id="citySelect">
+        <option value="jerusalem">Jerusalem</option>
+        <option value="nablus">Nablus</option>
+        <option value="ramallah">Ramallah</option>
+        <option value="hebron">Hebron</option>
+        <option value="jenin">Jenin</option>
+        <option value="jericho">Jericho</option>
+        <option value="tulkarm">Tulkarm</option>
+        <option value="bethlahem">Bethlahem</option>
+    </select>
+    
+    <br><br>
+    
+    <button onclick="goToPrediction()">Test Predictions</button>
+    <button onclick="goToTest()">Try Data</button>
+    <script>
+        function goToPrediction() {
+            const city = document.getElementById('citySelect').value;
+            localStorage.setItem('selectedCity', city);
+            
+            window.location.href = 'prediction.html';
+        }
+        function goToTest(){
+            window.location.href = 'test.html';
+        }
+    </script>
+</body>
+</html>

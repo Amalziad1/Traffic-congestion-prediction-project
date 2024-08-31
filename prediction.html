@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction UI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1 id="cityName2">Data for </span></h1>
+    <table id="cityTable">
+        <thead>
+            <tr>
+                <th>Label</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <form id="predictionForm">
+        <h1>Prediction: <span id="result"></span></h1>
+        <button type="button" onclick="makePrediction()">Predict</button>
+        <button type="button" onclick="goBack()">Back</button>
+    </form>
+
+    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const city = localStorage.getItem('selectedCity');
+            if (city) {
+                const currentContent = document.getElementById('cityName2').textContent;
+                document.getElementById('cityName2').textContent=currentContent+ city;
+                displayCityData(city);
+            } else {
+                document.getElementById('cityName2').innerText = 'City Not Selected';
+            }
+        });
+        async function fetchCityData() {
+            try {
+                const response = await fetch('tst.json');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                return data.cities; 
+            } catch (error) {
+                console.error('Failed to fetch city data:', error);
+                return {};
+            }
+        };
+
+        async function displayCityData(city) {
+            const cities = await fetchCityData();
+            const cityData = cities[city.toLowerCase()];
+            const cityNameElement = document.getElementById('cityName2');
+            const tableBody = document.getElementById('cityTable').getElementsByTagName('tbody')[0];
+            if (cityData && typeof cityData === 'object') {
+                //cityNameElement.textContent = city.charAt(0).toUpperCase() + city.slice(1);
+                tableBody.innerHTML = ''; 
+                console.log(cityData);
+                Object.entries(cityData).forEach(([label, value]) => {
+                    const row = document.createElement('tr');
+                    const labelCell = document.createElement('td');
+                    const valueCell = document.createElement('td');
+                    labelCell.textContent = label;
+                    valueCell.textContent = value;
+                    row.appendChild(labelCell);
+                    row.appendChild(valueCell);
+                    tableBody.appendChild(row);
+                });
+            } else {
+                cityNameElement.textContent = 'City Not Found';
+                tableBody.innerHTML = ''; 
+            }
+        }
+        function makePrediction() {
+            const tableBody = document.getElementById('cityTable').getElementsByTagName('tbody')[0];
+            const data = {};
+            for (let i = 0; i < tableBody.rows.length; i++) {
+                const labelCell = tableBody.rows[i].cells[0].innerText;
+                const valueCell = tableBody.rows[i].cells[1].innerText;
+                const keyMapping = {
+                    "Weather Conditions": "weather_conditions",
+                    "Road Type": "road_type",
+                    "Vehicle Type": "vehicle_type",
+                    "Temperature": "temperature",
+                    "Humidity": "humidity",
+                    "Wind Speed": "wind_speed",
+                    "Precipitation": "precipitation",
+                    "Population Density": "population_density"
+                };
+                const key = keyMapping[labelCell] || labelCell;
+                data[key] = parseFloat(valueCell);
+            }
+            fetch('http://localhost:5000/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                document.getElementById('result').innerText = result.prediction;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

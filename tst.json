@@ -1,0 +1,34 @@
+{
+    "cities": {
+        "jerusalem": {
+            "Weather Conditions": 75,
+            "Road Type": 2,
+            "Vehicle Type": 1,
+            "Temperature": 20,
+            "Humidity": 65,
+            "Wind Speed": 10,
+            "Precipitation": 0,
+            "Population Density": 10000
+        },
+        "ramallah": {
+            "Weather Conditions": 85,
+            "Road Type": 3,
+            "Vehicle Type": 2,
+            "Temperature": 25,
+            "Humidity": 55,
+            "Wind Speed": 8,
+            "Precipitation": 2,
+            "Population Density": 9000
+        },
+        "jenin": {
+            "Weather Conditions": 60,
+            "Road Type": 1,
+            "Vehicle Type": 3,
+            "Temperature": 15,
+            "Humidity": 70,
+            "Wind Speed": 12,
+            "Precipitation": 5,
+            "Population Density": 12000
+        }
+    }
+}
