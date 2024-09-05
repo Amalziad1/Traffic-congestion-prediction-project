@@ -1,0 +1,786 @@
+[
+  {
+    "city": "East Jerusalem",
+    "country": "Palestine",
+    "pop2024": 428304,
+    "latitude": 31.7834,
+    "longitude": 35.2339
+  },
+  {
+    "city": "Gaza",
+    "country": "Palestine",
+    "pop2024": 410000,
+    "latitude": 31.5016,
+    "longitude": 34.4667
+  },
+  {
+    "city": "Khan Yunis",
+    "country": "Palestine",
+    "pop2024": 173183,
+    "latitude": 31.3402,
+    "longitude": 34.3063
+  },
+  {
+    "city": "Jabalya",
+    "country": "Palestine",
+    "pop2024": 168568,
+    "latitude": 31.5272,
+    "longitude": 34.4835
+  },
+  {
+    "city": "Hebron",
+    "country": "Palestine",
+    "pop2024": 160470,
+    "latitude": 31.5294,
+    "longitude": 35.0938
+  },
+  {
+    "city": "Nablus",
+    "country": "Palestine",
+    "pop2024": 130326,
+    "latitude": 32.2211,
+    "longitude": 35.2544
+  },
+  {
+    "city": "Rafah",
+    "country": "Palestine",
+    "pop2024": 126305,
+    "latitude": 31.2972,
+    "longitude": 34.2436
+  },
+  {
+    "city": "Dayr al Balah",
+    "country": "Palestine",
+    "pop2024": 59504,
+    "latitude": 31.4178,
+    "longitude": 34.3503
+  },
+  {
+    "city": "Bayt Lahya",
+    "country": "Palestine",
+    "pop2024": 56919,
+    "latitude": 31.5464,
+    "longitude": 34.4951
+  },
+  {
+    "city": "Tulkarm",
+    "country": "Palestine",
+    "pop2024": 44169,
+    "latitude": 32.3104,
+    "longitude": 35.0286
+  },
+  {
+    "city": "Qalqilyah",
+    "country": "Palestine",
+    "pop2024": 43212,
+    "latitude": 32.1897,
+    "longitude": 34.9706
+  },
+  {
+    "city": "Yuta",
+    "country": "Palestine",
+    "pop2024": 41425,
+    "latitude": 31.4459,
+    "longitude": 35.0944
+  },
+  {
+    "city": "Al Birah",
+    "country": "Palestine",
+    "pop2024": 38192,
+    "latitude": 31.91,
+    "longitude": 35.2164
+  },
+  {
+    "city": "Bayt Hanun",
+    "country": "Palestine",
+    "pop2024": 37392,
+    "latitude": 31.5353,
+    "longitude": 34.5358
+  },
+  {
+    "city": "An Nusayrat",
+    "country": "Palestine",
+    "pop2024": 36123,
+    "latitude": 31.4486,
+    "longitude": 34.3925
+  },
+  {
+    "city": "Old City",
+    "country": "Palestine",
+    "pop2024": 36000,
+    "latitude": 31.7767,
+    "longitude": 35.2342
+  },
+  {
+    "city": "Al Burayj",
+    "country": "Palestine",
+    "pop2024": 34951,
+    "latitude": 31.4394,
+    "longitude": 34.4031
+  },
+  {
+    "city": "Janin",
+    "country": "Palestine",
+    "pop2024": 34730,
+    "latitude": 32.4594,
+    "longitude": 35.3009
+  },
+  {
+    "city": "Bani Suhayla",
+    "country": "Palestine",
+    "pop2024": 31272,
+    "latitude": 31.3434,
+    "longitude": 34.3234
+  },
+  {
+    "city": "Bethlehem",
+    "country": "Palestine",
+    "pop2024": 29019,
+    "latitude": 31.7049,
+    "longitude": 35.2038
+  },
+  {
+    "city": "Az Zahiriyah",
+    "country": "Palestine",
+    "pop2024": 27616,
+    "latitude": 31.4097,
+    "longitude": 34.9733
+  },
+  {
+    "city": "Kalandia",
+    "country": "Palestine",
+    "pop2024": 25595,
+    "latitude": 31.8667,
+    "longitude": 35.2167
+  },
+  {
+    "city": "Ar Ram wa Dahiyat al Barid",
+    "country": "Palestine",
+    "pop2024": 24838,
+    "latitude": 31.8494,
+    "longitude": 35.2342
+  },
+  {
+    "city": "Ramallah",
+    "country": "Palestine",
+    "pop2024": 24599,
+    "latitude": 31.8996,
+    "longitude": 35.2042
+  },
+  {
+    "city": "Halhul",
+    "country": "Palestine",
+    "pop2024": 21076,
+    "latitude": 31.5803,
+    "longitude": 35.1018
+  },
+  {
+    "city": "Dura",
+    "country": "Palestine",
+    "pop2024": 20835,
+    "latitude": 31.5078,
+    "longitude": 35.0293
+  },
+  {
+    "city": "Bani Na`im",
+    "country": "Palestine",
+    "pop2024": 19783,
+    "latitude": 31.5159,
+    "longitude": 35.1642
+  },
+  {
+    "city": "Jericho",
+    "country": "Palestine",
+    "pop2024": 19783,
+    "latitude": 31.8667,
+    "longitude": 35.45
+  },
+  {
+    "city": "Al Qararah",
+    "country": "Palestine",
+    "pop2024": 19500,
+    "latitude": 31.3739,
+    "longitude": 34.3409
+  },
+  {
+    "city": "As Samu`",
+    "country": "Palestine",
+    "pop2024": 19355,
+    "latitude": 31.3967,
+    "longitude": 35.0661
+  },
+  {
+    "city": "Qabatiyah",
+    "country": "Palestine",
+    "pop2024": 19127,
+    "latitude": 32.4104,
+    "longitude": 35.2809
+  },
+  {
+    "city": "Idhna",
+    "country": "Palestine",
+    "pop2024": 18727,
+    "latitude": 31.5587,
+    "longitude": 34.9744
+  },
+  {
+    "city": "`Abasan al Kabirah",
+    "country": "Palestine",
+    "pop2024": 18163,
+    "latitude": 31.3191,
+    "longitude": 34.34
+  },
+  {
+    "city": "Sa`ir",
+    "country": "Palestine",
+    "pop2024": 17775,
+    "latitude": 31.5786,
+    "longitude": 35.1402
+  },
+  {
+    "city": "Al `Ayzariyah",
+    "country": "Palestine",
+    "pop2024": 17455,
+    "latitude": 31.7708,
+    "longitude": 35.2692
+  },
+  {
+    "city": "Balatah",
+    "country": "Palestine",
+    "pop2024": 17146,
+    "latitude": 32.2121,
+    "longitude": 35.2856
+  },
+  {
+    "city": "Az Zuwaydah",
+    "country": "Palestine",
+    "pop2024": 16688,
+    "latitude": 31.4395,
+    "longitude": 34.3805
+  },
+  {
+    "city": "Bayt Jala",
+    "country": "Palestine",
+    "pop2024": 16183,
+    "latitude": 31.7155,
+    "longitude": 35.1879
+  },
+  {
+    "city": "Al Yamun",
+    "country": "Palestine",
+    "pop2024": 16164,
+    "latitude": 32.4856,
+    "longitude": 35.2301
+  },
+  {
+    "city": "Tubas",
+    "country": "Palestine",
+    "pop2024": 15591,
+    "latitude": 32.3209,
+    "longitude": 35.3699
+  },
+  {
+    "city": "Bayt Sahur",
+    "country": "Palestine",
+    "pop2024": 14921,
+    "latitude": 31.701,
+    "longitude": 35.2263
+  },
+  {
+    "city": "Tarqumya",
+    "country": "Palestine",
+    "pop2024": 14202,
+    "latitude": 31.5755,
+    "longitude": 35.0122
+  },
+  {
+    "city": "Ya`bad",
+    "country": "Palestine",
+    "pop2024": 13477,
+    "latitude": 32.4457,
+    "longitude": 35.1682
+  },
+  {
+    "city": "Surif",
+    "country": "Palestine",
+    "pop2024": 12992,
+    "latitude": 31.6508,
+    "longitude": 35.0644
+  },
+  {
+    "city": "Baytunya",
+    "country": "Palestine",
+    "pop2024": 12822,
+    "latitude": 31.8966,
+    "longitude": 35.1705
+  },
+  {
+    "city": "Bayt Ummar",
+    "country": "Palestine",
+    "pop2024": 12238,
+    "latitude": 31.6233,
+    "longitude": 35.1045
+  },
+  {
+    "city": "`Anata",
+    "country": "Palestine",
+    "pop2024": 11946,
+    "latitude": 31.8092,
+    "longitude": 35.259
+  },
+  {
+    "city": "Givat Zeev",
+    "country": "Palestine",
+    "pop2024": 11764,
+    "latitude": 31.8615,
+    "longitude": 35.1686
+  },
+  {
+    "city": "Abu Dis",
+    "country": "Palestine",
+    "pop2024": 11753,
+    "latitude": 31.7621,
+    "longitude": 35.2617
+  },
+  {
+    "city": "Salfit",
+    "country": "Palestine",
+    "pop2024": 11000,
+    "latitude": 32.0837,
+    "longitude": 35.1808
+  },
+  {
+    "city": "Al `Ubaydiyah",
+    "country": "Palestine",
+    "pop2024": 10618,
+    "latitude": 31.717,
+    "longitude": 35.2901
+  },
+  {
+    "city": "Bayt Fajjar",
+    "country": "Palestine",
+    "pop2024": 10579,
+    "latitude": 31.6244,
+    "longitude": 35.1546
+  },
+  {
+    "city": "Shukat as Sufi",
+    "country": "Palestine",
+    "pop2024": 10566,
+    "latitude": 31.26,
+    "longitude": 34.2826
+  },
+  {
+    "city": "Tammun",
+    "country": "Palestine",
+    "pop2024": 10119,
+    "latitude": 32.2835,
+    "longitude": 35.3837
+  },
+  {
+    "city": "Bayt Furik",
+    "country": "Palestine",
+    "pop2024": 10108,
+    "latitude": 32.1769,
+    "longitude": 35.3354
+  },
+  {
+    "city": "`Attil",
+    "country": "Palestine",
+    "pop2024": 10100,
+    "latitude": 32.3694,
+    "longitude": 35.0719
+  },
+  {
+    "city": "`Arrabah",
+    "country": "Palestine",
+    "pop2024": 9703,
+    "latitude": 32.4052,
+    "longitude": 35.2019
+  },
+  {
+    "city": "Ad Dawhah",
+    "country": "Palestine",
+    "pop2024": 9631,
+    "latitude": 31.6995,
+    "longitude": 35.1805
+  },
+  {
+    "city": "Silat al Harithiyah",
+    "country": "Palestine",
+    "pop2024": 9557,
+    "latitude": 32.5085,
+    "longitude": 35.2275
+  },
+  {
+    "city": "Taffuh",
+    "country": "Palestine",
+    "pop2024": 9480,
+    "latitude": 31.5385,
+    "longitude": 35.0497
+  },
+  {
+    "city": "Dayr al Ghusun",
+    "country": "Palestine",
+    "pop2024": 9187,
+    "latitude": 32.3524,
+    "longitude": 35.0769
+  },
+  {
+    "city": "Bayt Ula",
+    "country": "Palestine",
+    "pop2024": 9159,
+    "latitude": 31.5962,
+    "longitude": 35.0296
+  },
+  {
+    "city": "Khuza`ah",
+    "country": "Palestine",
+    "pop2024": 9023,
+    "latitude": 31.3067,
+    "longitude": 34.3611
+  },
+  {
+    "city": "Al Khadir",
+    "country": "Palestine",
+    "pop2024": 9003,
+    "latitude": 31.694,
+    "longitude": 35.1669
+  },
+  {
+    "city": "Bayta al Fawqa",
+    "country": "Palestine",
+    "pop2024": 8535,
+    "latitude": 32.1426,
+    "longitude": 35.2877
+  },
+  {
+    "city": "Qaffin",
+    "country": "Palestine",
+    "pop2024": 8489,
+    "latitude": 32.4327,
+    "longitude": 35.0827
+  },
+  {
+    "city": "Jaba`",
+    "country": "Palestine",
+    "pop2024": 8391,
+    "latitude": 32.3241,
+    "longitude": 35.2213
+  },
+  {
+    "city": "Dhannabah",
+    "country": "Palestine",
+    "pop2024": 8193,
+    "latitude": 32.3134,
+    "longitude": 35.0414
+  },
+  {
+    "city": "Ash Shuyukh",
+    "country": "Palestine",
+    "pop2024": 8151,
+    "latitude": 31.57,
+    "longitude": 35.1561
+  },
+  {
+    "city": "Bidya",
+    "country": "Palestine",
+    "pop2024": 8065,
+    "latitude": 32.1146,
+    "longitude": 35.0803
+  },
+  {
+    "city": "Bayt `Awwa",
+    "country": "Palestine",
+    "pop2024": 7943,
+    "latitude": 31.5091,
+    "longitude": 34.9494
+  },
+  {
+    "city": "Bayt Liqya",
+    "country": "Palestine",
+    "pop2024": 7795,
+    "latitude": 31.8696,
+    "longitude": 35.0654
+  },
+  {
+    "city": "`Azzun",
+    "country": "Palestine",
+    "pop2024": 7727,
+    "latitude": 32.175,
+    "longitude": 35.0575
+  },
+  {
+    "city": "`Aqraba",
+    "country": "Palestine",
+    "pop2024": 7707,
+    "latitude": 32.125,
+    "longitude": 35.3455
+  },
+  {
+    "city": "`Asirah ash Shamaliyah",
+    "country": "Palestine",
+    "pop2024": 7475,
+    "latitude": 32.2512,
+    "longitude": 35.2672
+  },
+  {
+    "city": "Kafr Ra`i",
+    "country": "Palestine",
+    "pop2024": 7276,
+    "latitude": 32.374,
+    "longitude": 35.1545
+  },
+  {
+    "city": "Qatanah",
+    "country": "Palestine",
+    "pop2024": 7274,
+    "latitude": 31.8337,
+    "longitude": 35.1189
+  },
+  {
+    "city": "`Anabta",
+    "country": "Palestine",
+    "pop2024": 7106,
+    "latitude": 32.3079,
+    "longitude": 35.1169
+  },
+  {
+    "city": "Qabalan",
+    "country": "Palestine",
+    "pop2024": 7043,
+    "latitude": 32.1018,
+    "longitude": 35.2894
+  },
+  {
+    "city": "Silwad",
+    "country": "Palestine",
+    "pop2024": 7006,
+    "latitude": 31.9762,
+    "longitude": 35.2613
+  },
+  {
+    "city": "Kharas",
+    "country": "Palestine",
+    "pop2024": 6885,
+    "latitude": 31.6148,
+    "longitude": 35.0417
+  },
+  {
+    "city": "Maythalun",
+    "country": "Palestine",
+    "pop2024": 6804,
+    "latitude": 32.348,
+    "longitude": 35.2745
+  },
+  {
+    "city": "Dayr Dibwan",
+    "country": "Palestine",
+    "pop2024": 6692,
+    "latitude": 31.9111,
+    "longitude": 35.2666
+  },
+  {
+    "city": "`Illar",
+    "country": "Palestine",
+    "pop2024": 6681,
+    "latitude": 32.3702,
+    "longitude": 35.1071
+  },
+  {
+    "city": "Bal`a",
+    "country": "Palestine",
+    "pop2024": 6545,
+    "latitude": 32.3339,
+    "longitude": 35.1116
+  },
+  {
+    "city": "Al Mughraqah",
+    "country": "Palestine",
+    "pop2024": 6448,
+    "latitude": 31.4659,
+    "longitude": 34.4121
+  },
+  {
+    "city": "Bir Zayt",
+    "country": "Palestine",
+    "pop2024": 6398,
+    "latitude": 31.9696,
+    "longitude": 35.1941
+  },
+  {
+    "city": "Nahhalin",
+    "country": "Palestine",
+    "pop2024": 6215,
+    "latitude": 31.6856,
+    "longitude": 35.1208
+  },
+  {
+    "city": "An Nasr",
+    "country": "Palestine",
+    "pop2024": 6211,
+    "latitude": 31.2814,
+    "longitude": 34.3025
+  },
+  {
+    "city": "Za`tarah",
+    "country": "Palestine",
+    "pop2024": 6210,
+    "latitude": 31.6736,
+    "longitude": 35.2566
+  },
+  {
+    "city": "Oranit",
+    "country": "Palestine",
+    "pop2024": 6205,
+    "latitude": 32.1316,
+    "longitude": 34.9909
+  },
+  {
+    "city": "Biddu",
+    "country": "Palestine",
+    "pop2024": 6180,
+    "latitude": 31.8348,
+    "longitude": 35.1495
+  },
+  {
+    "city": "Jamma`in",
+    "country": "Palestine",
+    "pop2024": 6158,
+    "latitude": 32.1316,
+    "longitude": 35.204
+  },
+  {
+    "city": "Dayr Samit",
+    "country": "Palestine",
+    "pop2024": 6144,
+    "latitude": 31.5206,
+    "longitude": 34.9744
+  },
+  {
+    "city": "Az Zaytuniyah",
+    "country": "Palestine",
+    "pop2024": 6107,
+    "latitude": 31.954,
+    "longitude": 35.1624
+  },
+  {
+    "city": "Silat az Zahr",
+    "country": "Palestine",
+    "pop2024": 6079,
+    "latitude": 32.3193,
+    "longitude": 35.1842
+  },
+  {
+    "city": "`Abasan al Jadidah",
+    "country": "Palestine",
+    "pop2024": 5984,
+    "latitude": 31.3416,
+    "longitude": 34.3459
+  },
+  {
+    "city": "Hablah",
+    "country": "Palestine",
+    "pop2024": 5945,
+    "latitude": 32.1652,
+    "longitude": 34.9775
+  },
+  {
+    "city": "Hizma",
+    "country": "Palestine",
+    "pop2024": 5916,
+    "latitude": 31.8334,
+    "longitude": 35.2631
+  },
+  {
+    "city": "Bayt Lid",
+    "country": "Palestine",
+    "pop2024": 5740,
+    "latitude": 32.2609,
+    "longitude": 35.1317
+  },
+  {
+    "city": "Birqin",
+    "country": "Palestine",
+    "pop2024": 5730,
+    "latitude": 32.4546,
+    "longitude": 35.2608
+  },
+  {
+    "city": "Bayt Kahil",
+    "country": "Palestine",
+    "pop2024": 5663,
+    "latitude": 31.5701,
+    "longitude": 35.065
+  },
+  {
+    "city": "Huwwarah",
+    "country": "Palestine",
+    "pop2024": 5633,
+    "latitude": 32.1522,
+    "longitude": 35.2567
+  },
+  {
+    "city": "`Awarta",
+    "country": "Palestine",
+    "pop2024": 5563,
+    "latitude": 32.1611,
+    "longitude": 35.2839
+  },
+  {
+    "city": "Husan",
+    "country": "Palestine",
+    "pop2024": 5535,
+    "latitude": 31.7093,
+    "longitude": 35.1348
+  },
+  {
+    "city": "Dayr Abu Da`if",
+    "country": "Palestine",
+    "pop2024": 5506,
+    "latitude": 32.456,
+    "longitude": 35.3616
+  },
+  {
+    "city": "Al Fukhkhari",
+    "country": "Palestine",
+    "pop2024": 5464,
+    "latitude": 31.2928,
+    "longitude": 34.3306
+  },
+  {
+    "city": "Bani Zayd",
+    "country": "Palestine",
+    "pop2024": 5441,
+    "latitude": 32.0392,
+    "longitude": 35.1032
+  },
+  {
+    "city": "Sinjil",
+    "country": "Palestine",
+    "pop2024": 5371,
+    "latitude": 32.0333,
+    "longitude": 35.2654
+  },
+  {
+    "city": "Jannatah",
+    "country": "Palestine",
+    "pop2024": 5348,
+    "latitude": 31.6696,
+    "longitude": 35.2196
+  },
+  {
+    "city": "Kharbatha al Misbah",
+    "country": "Palestine",
+    "pop2024": 5141,
+    "latitude": 31.8855,
+    "longitude": 35.0718
+  },
+  {
+    "city": "Bani Zayd ash Sharqiyah",
+    "country": "Palestine",
+    "pop2024": 5015,
+    "latitude": 32.0494,
+    "longitude": 35.1659
+  }
+]

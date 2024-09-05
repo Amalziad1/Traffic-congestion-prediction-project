@@ -1,138 +1,75 @@
-/* Importing fonts */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap');
-
-* {
+/* style.css */
+body {
+    font-family: sans-serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Open Sans', sans-serif;
-    background-color: #f4f6f9;
-    color: #2c3e50;
+    background-color: #f4f4f4;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     min-height: 100vh;
-    padding: 20px;
 }
 
-/* Heading styles */
-h1, h2, h3 {
-    font-family: 'Roboto', sans-serif;
-    color: #1a237e;
-    margin-bottom: 15px;
-    font-weight: 700; /* Bold */
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center; 
 }
 
-/* Labels and input fields */
-label {
-    font-size: 1.1em;
-    margin-bottom: 10px;
-    color: #2c3e50;
+h1 {
+    color: #333;
 }
 
-select, input[type="number"] {
-    padding: 12px;
-    font-size: 1em;
-    border: 2px solid #1a237e;
-    border-radius: 8px;
-    background-color: #ffffff;
-    color: #2c3e50;
+.form-group {
     margin-bottom: 20px;
-    transition: border-color 0.3s;
 }
 
-select:focus, input[type="number"]:focus {
-    border-color: #ff7043;
-    outline: none;
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
 }
 
-/* Button styles */
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 16px;
+}
+
 button {
-    padding: 14px 28px;
-    font-size: 1.1em;
-    background-color: #1a237e;
-    color: #ffffff;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
     border: none;
-    border-radius: 8px;
+    border-radius: 3px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    margin: 5px; /* Add spacing between buttons */
+    font-size: 16px;
 }
 
 button:hover {
-    background-color: #ff7043;
-    transform: scale(1.05);
+    background-color: #0056b3;
 }
 
-button:focus {
-    outline: 3px solid #ff7043;
-}
-
-/* Button container */
-.button-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.button-container button {
-    width: 100%;
-    max-width: 200px; /* Set max-width for consistency */
-}
-
-/* Result display */
-#result {
-    color: #ff7043;
-    font-size: 1.5em;
-    margin-top: 20px;
-    font-weight: 600; /* Semi-bold */
-}
-
-/* Table styles */
 table {
-    width: 90%;
-    margin: 20px auto;
+    width: 100%;
     border-collapse: collapse;
-    background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    overflow: hidden;
+    margin-top: 20px;
 }
 
-table th, table td {
-    padding: 12px 15px;
-    text-align: center;
+th, td {
+    padding: 8px;
+    text-align: left;
     border-bottom: 1px solid #ddd;
-    color: #2c3e50;
 }
 
-table th {
-    background-color: #1a237e;
-    color: #ffffff;
-    text-transform: uppercase;
-    font-weight: 700;
+th {
+    background-color: #f0f0f0;
 }
-
-table tr:hover {
-    background-color: #f9f9f9;
-}
-
-/* Responsiveness */
-@media (max-width: 768px) {
-    body {
-        padding: 10px;
-    }
-
-    table {
-        width: 100%;
-    }
-
-    button {
-        width: 100%;
-        font-size: 1em;
-    }
+/* style.css */
+.table-container {
+    margin-bottom: 30px; /* Add bottom margin to separate the tables */
 }

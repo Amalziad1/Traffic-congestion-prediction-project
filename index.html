@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Selection - Palestine</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Select a City in Palestine</h1>
+        <div class="form-group">
+            <label for="citySelect">Choose a city:</label>
+            <select id="citySelect"></select>
+        </div>
+        <button onclick="goToPrediction()">View City Data & Prediction</button> 
+    </div>
+
+    <script>
+        const CACHE_KEY = 'palestineCitiesCache'; 
+        const CACHE_DURATION = 1 * 60 * 60 * 1000; // 1 hour in milliseconds 
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCities();
+        });
+
+        function loadCities() {
+            const cachedData = localStorage.getItem(CACHE_KEY);
+            if (cachedData) {
+                const { timestamp, cities } = JSON.parse(cachedData);
+                if (Date.now() - timestamp < CACHE_DURATION) {
+                    populateCitySelect(cities);
+                    return;
+                }
+            }
+            
+            fetchCitiesFromAPI();
+        }
+
+        function fetchCitiesFromAPI() {
+            fetch('http://localhost:5000/api/cities')
+                .then(response => response.json())
+                .then(cities => {
+                    populateCitySelect(cities);
+                    localStorage.setItem(CACHE_KEY, JSON.stringify({
+                        timestamp: Date.now(),
+                        cities: cities
+                    }));
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function populateCitySelect(cities) {
+            const select = document.getElementById('citySelect');
+            select.innerHTML = '';
+
+            // Sort the cities alphabetically
+            cities.sort((a, b) => a.localeCompare(b)); 
+
+            cities.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city;
+                option.textContent = city.charAt(0).toUpperCase() + city.slice(1);
+                select.appendChild(option);
+            });
+        }
+
+        function goToPrediction() {
+            const city = document.getElementById('citySelect').value;
+            window.location.href = `prediction.html?city=${encodeURIComponent(city)}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Data and Prediction - Palestine</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Data for <span id="selectedCity"></span></h1>
+        <div id="errorMessage" style="color: red; display: none;"></div>
+
+        <div class="table-container">
+            <h2>City Information</h2>
+            <table id="cityTable">
+                <thead>
+                    <tr>
+                        <th>Label</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="table-container">
+            <h2 id="weatherHeading">Weather Information</h2> 
+            <div id="weatherTimestamp"></div>
+            <table id="weatherTable">
+                <thead>
+                    <tr>
+                        <!-- Headers will be dynamically created --> 
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div id="predictionSection">
+            <h2><button onclick="makePrediction()">Get Prediction</button></h2> 
+            <p>Prediction Result: <span id="result"></span></p> 
+            <div id="suggestions" style="display: none;">
+                <h3>Suggestions:</h3>
+                <ul id="suggestionList"></ul>
+            </div>
+        </div>
+        <button onclick="goBack()">Back to City Selection</button> 
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const city = urlParams.get('city');
+            if (city) {
+                document.getElementById('selectedCity').textContent = decodeURIComponent(city).charAt(0).toUpperCase() + decodeURIComponent(city).slice(1);
+                fetchCityData(city);
+            } else {
+                showError('No city selected');
+            }
+        });
+
+        function fetchCityData(city) {
+            fetch(`http://localhost:5000/api/city/${encodeURIComponent(city)}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('City data not found');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    populateCityTable(data); 
+                    populateWeatherTable(data); 
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    showError(error.message); 
+                });
+        }
+
+        function populateCityTable(data) {
+            const cityTableBody = document.getElementById('cityTable').getElementsByTagName('tbody')[0];
+            cityTableBody.innerHTML = ''; 
+
+            for (const label of ['city', 'country', 'population', 'coordinates']) { 
+                if (data.hasOwnProperty(label)) {
+                    let value = data[label]; 
+                    if (label === 'coordinates') { 
+                        value = `${data[label][0]}, ${data[label][1]}`; 
+                    }
+                    addRowToTable(cityTableBody, label, value, 'td'); 
+                }
+            }
+        }
+
+        function populateWeatherTable(data) {
+            const weatherTableBody = document.getElementById('weatherTable').getElementsByTagName('tbody')[0];
+            const weatherTableHead = document.getElementById('weatherTable').getElementsByTagName('thead')[0];
+            weatherTableBody.innerHTML = ''; 
+            weatherTableHead.innerHTML = '';
+
+            if (data.hasOwnProperty('weather')) {
+                document.getElementById('weatherHeading').style.display = 'block';
+
+                let timestamp = new Date(); 
+                if (data.hasOwnProperty('weather_timestamp')) {
+                    timestamp = new Date(data['weather_timestamp']);
+                }
+
+                let headerRow = weatherTableHead.insertRow(); 
+                addRowToTable(headerRow, "Time", "", "th");
+                for (const metric of ['Temperature', 'Humidity', 'Wind Speed', 'Precipitation', 'Description']) {
+                    addRowToTable(headerRow, metric, "", "th");
+                }
+
+                let currentRow = weatherTableBody.insertRow(); 
+                const currentTime = timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                addRowToTable(currentRow, currentTime, "", "td"); 
+                addRowToTable(currentRow, data['weather']['current']['temperature'], "", "td");
+                addRowToTable(currentRow, data['weather']['current']['humidity'], "", "td");
+                addRowToTable(currentRow, data['weather']['current']['wind_speed'], "", "td");
+                addRowToTable(currentRow, data['weather']['current']['precipitation'], "", "td");
+                addRowToTable(currentRow, data['weather']['current']['description'], "", "td");
+
+                for (let i = 0; i < data['weather']['hourly'].length; i++) {
+                    const hourData = data['weather']['hourly'][i];
+                    const hourTimestamp = new Date(timestamp.getTime() + (i + 1) * 60 * 60 * 1000);
+                    const hourTime = hourTimestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); 
+
+                    let hourlyRow = weatherTableBody.insertRow();
+                    addRowToTable(hourlyRow, hourTime, "", "td");
+                    addRowToTable(hourlyRow, hourData['temperature'], "", "td");
+                    addRowToTable(hourlyRow, hourData['humidity'], "", "td");
+                    addRowToTable(hourlyRow, hourData['wind_speed'], "", "td");
+                    addRowToTable(hourlyRow, hourData['precipitation'], "", "td");
+                    addRowToTable(hourlyRow, hourData['description'], "", "td");
+                }
+
+                if (data.hasOwnProperty('weather_timestamp')) {
+                    const timestampDiv = document.getElementById('weatherTimestamp');
+                    timestampDiv.textContent = `(Last Updated: ${new Date(data['weather_timestamp']).toLocaleString()})`;
+                    timestampDiv.style.display = 'block'; 
+                }
+            } else {
+                document.getElementById('weatherHeading').style.display = 'none';
+                document.getElementById('weatherTimestamp').style.display = 'none';
+            }
+        }
+
+        function addRowToTable(tableBody, label, value = "", cellType = "td") {
+            const cell = document.createElement(cellType);
+            cell.textContent = value !== "" ? value : label; 
+            tableBody.appendChild(cell); 
+        }
+
+        function makePrediction() {
+            const selectedCity = document.getElementById('selectedCity').textContent.toLowerCase();
+            const data = { city: selectedCity };
+            fetch('http://localhost:5000/api/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                document.getElementById('result').innerText = result.prediction; 
+                generateSuggestions(result.prediction);
+            })
+            .catch(error => {
+                console.error('Error making prediction:', error);
+                showError('Error making prediction'); 
+            });
+        }
+
+        function generateSuggestions(prediction) {
+            const suggestionList = document.getElementById('suggestionList');
+            suggestionList.innerHTML = ''; // Clear previous suggestions
+
+            const predictionValue = parseFloat(prediction);
+
+            if (predictionValue >= 0.9) {
+                addSuggestion("Deploy more traffic police to manage high traffic volume.");
+                addSuggestion("Consider reducing traffic light times to optimize traffic flow.");
+                addSuggestion("Encourage alternative transportation methods like public transport or cycling.");
+            } else if (predictionValue >= 0.7) {
+                addSuggestion("Monitor traffic flow closely and adjust traffic light timing as needed.");
+                addSuggestion("Inform drivers about potential congestion areas through traffic updates.");
+            } else if (predictionValue >= 0.5) {
+                addSuggestion("Prepare for potential traffic increases during peak hours."); 
+            } else if (predictionValue >= 0.3) {
+                addSuggestion("Traffic flow is expected to be relatively smooth.");
+            } else {
+                addSuggestion("Traffic flow is expected to be very light.");
+            }
+
+            document.getElementById('suggestions').style.display = 'block';
+        }
+
+        function addSuggestion(text) {
+            const li = document.createElement('li');
+            li.textContent = text;
+            document.getElementById('suggestionList').appendChild(li);
+        }
+
+
+        function showError(message) {
+            const errorElement = document.getElementById('errorMessage');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            document.getElementById('cityTable').style.display = 'none';
+            document.getElementById('predictionSection').style.display = 'none';
+        }
+
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
