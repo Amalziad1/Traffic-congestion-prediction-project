@@ -4,6 +4,7 @@ import requests
 import json
 import random
 from datetime import datetime, timedelta
+from openpyxl import load_workbook  # Import openpyxl
 
 app = Flask(__name__)
 CORS(app)
@@ -13,28 +14,46 @@ CACHE_FILE = 'weather_cache.json'
 CACHE_DURATION = timedelta(hours=1)  # Cache duration set to 1 hour
 
 def load_city_data():
-    print("Loading city data from palestine_cities.json...")
+    print("Loading city data from palestine_cities.xlsx...")
     try:
-        with open('palestine_cities.json', 'r') as f:
-            city_list = json.load(f)
+        workbook = load_workbook('palestine_cities.xlsx')
+        sheet = workbook.active
+
         cities = {}
-        for city_info in city_list:
-            city_name_lower = city_info['city'].lower()
+        for row in sheet.iter_rows(min_row=2):  # Start from row 2, assuming row 1 is header
+            city_name = row[0].value  # Column A
+            city_name_ar = row[1].value # Column B
+            land_area = row[2].value  # Column C
+            population = row[3].value # Column D
+            latitude = row[4].value   # Column E
+            longitude = row[5].value  # Column F
+            population_density = row[6].value # Column G
+            coordinates_str = row[7].value  # Column H (Coordinates string)
+
+            # Extract coordinates from the string 
+            if coordinates_str:
+                coordinates = [float(coord) for coord in coordinates_str.split(',')] 
+            else:
+                coordinates = [None, None] # Handle cases where coordinates are missing
+
+            city_name_lower = city_name.lower()
             cities[city_name_lower] = {
-                "city": city_info['city'],
-                "country": city_info['country'],
-                "population": city_info['pop2024'],
-                "coordinates": [city_info['longitude'], city_info['latitude']]
+                "city": city_name,
+                "location_ar": city_name_ar,
+                "land_area": land_area,
+                "population": population,
+                "coordinates": coordinates,  
+                "population_density": population_density
             }
+
         print("City data loaded successfully.")
-        # print(json.dumps(cities, indent=2)) 
         return cities
 
     except FileNotFoundError:
-        print("Error: palestine_cities.json not found.")
+        print("Error: palestine_cities.xlsx not found.")
         return {}
-    except json.JSONDecodeError as e:
-        print(f"Error: Invalid JSON in palestine_cities.json: {e}")
+    except Exception as e:
+        print(f"Error loading data from Excel file: {e}")
         return {}
 
 # Load weather data from cache

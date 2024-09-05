@@ -329,13 +329,6 @@
     "longitude": 35.259
   },
   {
-    "city": "Givat Zeev",
-    "country": "Palestine",
-    "pop2024": 11764,
-    "latitude": 31.8615,
-    "longitude": 35.1686
-  },
-  {
     "city": "Abu Dis",
     "country": "Palestine",
     "pop2024": 11753,
@@ -628,13 +621,6 @@
     "pop2024": 6210,
     "latitude": 31.6736,
     "longitude": 35.2566
-  },
-  {
-    "city": "Oranit",
-    "country": "Palestine",
-    "pop2024": 6205,
-    "latitude": 32.1316,
-    "longitude": 34.9909
   },
   {
     "city": "Biddu",
