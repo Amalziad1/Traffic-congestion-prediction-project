@@ -4,33 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>City Data and Prediction - Palestine</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body { font-family: sans-serif; }
+        .container { width: 80%; margin: 0 auto; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Data for <span id="selectedCity"></span></h1>
         <div id="errorMessage" style="color: red; display: none;"></div>
 
-        <div class="table-container">
+        <div class="table-container" id="cityInfo">
             <h2>City Information</h2>
             <table id="cityTable">
-                <thead>
-                    <tr>
-                        <th>Label</th>
-                        <th>Value</th>
-                    </tr>
-                </thead>
                 <tbody></tbody>
             </table>
         </div>
 
-        <div class="table-container">
-            <h2 id="weatherHeading">Weather Information</h2> 
+        <div class="table-container" id="weatherInfo">
+            <h2>Weather Information</h2> 
             <div id="weatherTimestamp"></div>
             <table id="weatherTable">
                 <thead>
                     <tr>
-                        <!-- Headers will be dynamically created --> 
+                        <th>Time</th>
+                        <th>Temperature (°C)</th>
+                        <th>Humidity (%)</th>
+                        <th>Wind Speed (kph)</th>
+                        <th>Precipitation (mm)</th>
+                        <th>Description</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -53,7 +57,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const city = urlParams.get('city');
             if (city) {
-                document.getElementById('selectedCity').textContent = decodeURIComponent(city).charAt(0).toUpperCase() + decodeURIComponent(city).slice(1);
+                document.getElementById('selectedCity').textContent = decodeURIComponent(city);
                 fetchCityData(city);
             } else {
                 showError('No city selected');
@@ -69,89 +73,64 @@
                     return response.json();
                 })
                 .then(data => {
-                    populateCityTable(data); 
-                    populateWeatherTable(data); 
+                    populateCityTable(data);
+                    populateWeatherTable(data);
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
-                    showError(error.message); 
+                    showError(error.message);
                 });
         }
 
         function populateCityTable(data) {
-            const cityTableBody = document.getElementById('cityTable').getElementsByTagName('tbody')[0];
-            cityTableBody.innerHTML = ''; 
+            const tableBody = document.getElementById('cityTable').getElementsByTagName('tbody')[0];
+            tableBody.innerHTML = ''; 
 
-            for (const label of ['city', 'country', 'population', 'coordinates']) { 
-                if (data.hasOwnProperty(label)) {
-                    let value = data[label]; 
-                    if (label === 'coordinates') { 
-                        value = `${data[label][0]}, ${data[label][1]}`; 
-                    }
-                    addRowToTable(cityTableBody, label, value, 'td'); 
+            for (const key in data) {
+                if (key !== 'weather') { // Exclude weather data
+                    const row = tableBody.insertRow();
+                    const labelCell = row.insertCell();
+                    const valueCell = row.insertCell();
+                    labelCell.textContent = key;
+                    valueCell.textContent = data[key];
                 }
             }
         }
 
         function populateWeatherTable(data) {
-            const weatherTableBody = document.getElementById('weatherTable').getElementsByTagName('tbody')[0];
-            const weatherTableHead = document.getElementById('weatherTable').getElementsByTagName('thead')[0];
-            weatherTableBody.innerHTML = ''; 
-            weatherTableHead.innerHTML = '';
+            const tableBody = document.getElementById('weatherTable').getElementsByTagName('tbody')[0];
+            const timestampDiv = document.getElementById('weatherTimestamp');
+            tableBody.innerHTML = '';
 
-            if (data.hasOwnProperty('weather')) {
-                document.getElementById('weatherHeading').style.display = 'block';
+            if (data.weather && data.weather.forecast && data.weather.forecast.forecastday[0]) {
+                const forecastData = data.weather.forecast.forecastday[0].hour;
 
-                let timestamp = new Date(); 
-                if (data.hasOwnProperty('weather_timestamp')) {
-                    timestamp = new Date(data['weather_timestamp']);
-                }
+                timestampDiv.textContent = `(Last Updated: ${new Date(data.weather.current.last_updated).toLocaleString()})`;
+                timestampDiv.style.display = 'block';
 
-                let headerRow = weatherTableHead.insertRow(); 
-                addRowToTable(headerRow, "Time", "", "th");
-                for (const metric of ['Temperature', 'Humidity', 'Wind Speed', 'Precipitation', 'Description']) {
-                    addRowToTable(headerRow, metric, "", "th");
-                }
+                for (let i = 0; i < forecastData.length; i++) {
+                    const hourData = forecastData[i];
+                    const row = tableBody.insertRow();
 
-                let currentRow = weatherTableBody.insertRow(); 
-                const currentTime = timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                addRowToTable(currentRow, currentTime, "", "td"); 
-                addRowToTable(currentRow, data['weather']['current']['temperature'], "", "td");
-                addRowToTable(currentRow, data['weather']['current']['humidity'], "", "td");
-                addRowToTable(currentRow, data['weather']['current']['wind_speed'], "", "td");
-                addRowToTable(currentRow, data['weather']['current']['precipitation'], "", "td");
-                addRowToTable(currentRow, data['weather']['current']['description'], "", "td");
+                    const timeCell = row.insertCell();
+                    const tempCell = row.insertCell();
+                    const humidityCell = row.insertCell();
+                    const windCell = row.insertCell();
+                    const precipCell = row.insertCell();
+                    const descCell = row.insertCell();
 
-                for (let i = 0; i < data['weather']['hourly'].length; i++) {
-                    const hourData = data['weather']['hourly'][i];
-                    const hourTimestamp = new Date(timestamp.getTime() + (i + 1) * 60 * 60 * 1000);
-                    const hourTime = hourTimestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); 
-
-                    let hourlyRow = weatherTableBody.insertRow();
-                    addRowToTable(hourlyRow, hourTime, "", "td");
-                    addRowToTable(hourlyRow, hourData['temperature'], "", "td");
-                    addRowToTable(hourlyRow, hourData['humidity'], "", "td");
-                    addRowToTable(hourlyRow, hourData['wind_speed'], "", "td");
-                    addRowToTable(hourlyRow, hourData['precipitation'], "", "td");
-                    addRowToTable(hourlyRow, hourData['description'], "", "td");
-                }
-
-                if (data.hasOwnProperty('weather_timestamp')) {
-                    const timestampDiv = document.getElementById('weatherTimestamp');
-                    timestampDiv.textContent = `(Last Updated: ${new Date(data['weather_timestamp']).toLocaleString()})`;
-                    timestampDiv.style.display = 'block'; 
+                    timeCell.textContent = new Date(hourData.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    tempCell.textContent = hourData.temp_c;
+                    humidityCell.textContent = hourData.humidity;
+                    windCell.textContent = hourData.wind_kph;
+                    precipCell.textContent = hourData.precip_mm;
+                    descCell.textContent = hourData.condition.text;
                 }
             } else {
-                document.getElementById('weatherHeading').style.display = 'none';
-                document.getElementById('weatherTimestamp').style.display = 'none';
+                timestampDiv.style.display = 'none';
             }
         }
 
-        function addRowToTable(tableBody, label, value = "", cellType = "td") {
-            const cell = document.createElement(cellType);
-            cell.textContent = value !== "" ? value : label; 
-            tableBody.appendChild(cell); 
-        }
 
         function makePrediction() {
             const selectedCity = document.getElementById('selectedCity').textContent.toLowerCase();
@@ -209,7 +188,8 @@
             const errorElement = document.getElementById('errorMessage');
             errorElement.textContent = message;
             errorElement.style.display = 'block';
-            document.getElementById('cityTable').style.display = 'none';
+            document.getElementById('cityInfo').style.display = 'none';
+            document.getElementById('weatherInfo').style.display = 'none';
             document.getElementById('predictionSection').style.display = 'none';
         }
 

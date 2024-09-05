@@ -4,192 +4,122 @@ import requests
 import json
 import random
 from datetime import datetime, timedelta
-from openpyxl import load_workbook  # Import openpyxl
+from openpyxl import load_workbook
 
 app = Flask(__name__)
 CORS(app)
 
-WEATHERAPI_KEY = "91505f7efd4b494eb66191358240509"  # Replace with your API key!
+WEATHERAPI_KEY = "91505f7efd4b494eb66191358240509"  # Replace with your actual API key
 CACHE_FILE = 'weather_cache.json'
-CACHE_DURATION = timedelta(hours=1)  # Cache duration set to 1 hour
+CACHE_DURATION = timedelta(hours=1)
 
 def load_city_data():
-    print("Loading city data from palestine_cities.xlsx...")
+    """Loads city data from the Excel file."""
+    cities = {}
     try:
         workbook = load_workbook('palestine_cities.xlsx')
         sheet = workbook.active
-
-        cities = {}
-        for row in sheet.iter_rows(min_row=2):  # Start from row 2, assuming row 1 is header
-            city_name = row[0].value  # Column A
-            city_name_ar = row[1].value # Column B
-            land_area = row[2].value  # Column C
-            population = row[3].value # Column D
-            latitude = row[4].value   # Column E
-            longitude = row[5].value  # Column F
-            population_density = row[6].value # Column G
-            coordinates_str = row[7].value  # Column H (Coordinates string)
-
-            # Extract coordinates from the string 
-            if coordinates_str:
-                coordinates = [float(coord) for coord in coordinates_str.split(',')] 
-            else:
-                coordinates = [None, None] # Handle cases where coordinates are missing
-
-            city_name_lower = city_name.lower()
-            cities[city_name_lower] = {
-                "city": city_name,
-                "location_ar": city_name_ar,
-                "land_area": land_area,
-                "population": population,
-                "coordinates": coordinates,  
-                "population_density": population_density
+        for row in sheet.iter_rows(min_row=2, values_only=True):
+            city_name = row[0]
+            cities[city_name.lower()] = {
+                'city': city_name,
+                'location_ar': row[1],
+                'land_area': row[2],
+                'population': row[3],
+                'latitude': row[4],
+                'longitude': row[5],
+                'population_density': row[6]
             }
-
-        print("City data loaded successfully.")
-        return cities
-
     except FileNotFoundError:
         print("Error: palestine_cities.xlsx not found.")
-        return {}
     except Exception as e:
-        print(f"Error loading data from Excel file: {e}")
-        return {}
+        print(f"Error loading city data: {e}")
+    return cities
 
-# Load weather data from cache
-def load_cache():
-    print("Loading weather cache from:", CACHE_FILE)
+def load_weather_cache():
+    """Loads weather data from the cache file."""
     try:
         with open(CACHE_FILE, 'r') as f:
             cache = json.load(f)
-            print("Cache loaded successfully.")
-            return cache
     except FileNotFoundError:
-        print("Cache file not found. Initializing new cache.")
-        return {'timestamp': None, 'data': {}}
-    except json.JSONDecodeError:
-        print("Error decoding cache JSON. Initializing new cache.")
-        return {'timestamp': None, 'data': {}}
+        cache = {}
+    return cache
 
-# Save weather data to cache
-def save_cache(cache):
-    print("Saving weather cache to:", CACHE_FILE)
-    try:
-        with open(CACHE_FILE, 'w') as f:
-            json.dump(cache, f)
-        print("Cache saved successfully.")
-    except Exception as e:
-        print(f"Error saving cache: {e}")
+def save_weather_cache(cache):
+    """Saves weather data to the cache file."""
+    with open(CACHE_FILE, 'w') as f:
+        json.dump(cache, f)
 
-# Fetch weather data using WeatherAPI (modified)
-def fetch_weather_data(city_name, coordinates=None, api_key=WEATHERAPI_KEY):
-    print(f"Fetching weather data for {city_name} from WeatherAPI...")
+def fetch_weather_data(city_name, latitude, longitude):
+    """Fetches weather data from WeatherAPI."""
+    print(f"Fetching weather for {city_name} ({latitude}, {longitude})")
     url = "http://api.weatherapi.com/v1/forecast.json"
     params = {
-        "key": api_key,
-        "days": 1,  
+        "key": WEATHERAPI_KEY,
+        "q": f"{latitude},{longitude}",
+        "days": 1,
         "aqi": "no"
     }
-
-    if coordinates:
-        params["q"] = f"{coordinates[1]},{coordinates[0]}"  # Latitude, Longitude
+    response = requests.get(url, params=params)
+    if response.status_code == 200:
+        return response.json()
     else:
-        params["q"] = city_name 
-
-    try:
-        response = requests.get(url, params=params)
-        response.raise_for_status()
-        data = response.json()
-
-        weather_info = {
-            "current": {
-                "temperature": data['current']['temp_c'],
-                "humidity": data['current']['humidity'],
-                "wind_speed": data['current']['wind_kph'],
-                "precipitation": data['current']['precip_mm'],
-                "description": data['current']['condition']['text']
-            },
-            "hourly": []
-        }
-
-        for hour_data in data['forecast']['forecastday'][0]['hour']:
-            weather_info["hourly"].append({
-                "temperature": hour_data['temp_c'],
-                "humidity": hour_data['humidity'],
-                "wind_speed": hour_data['wind_kph'],
-                "precipitation": hour_data['precip_mm'],
-                "description": hour_data['condition']['text']
-            })
-
-        print(f"Weather data fetched successfully for {city_name}")
-        return weather_info
-
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching weather data: {e}")
+        print(f"Error fetching weather: {response.status_code}")
         return None
 
-
-def get_or_update_weather_cache(city_name, coordinates=None):
-    cache = load_cache()
+def get_weather(city_name, latitude, longitude):
+    """Gets weather data, using cache if available."""
+    cache = load_weather_cache()
+    cache_key = f"{city_name}_{latitude}_{longitude}"
     now = datetime.now()
 
-    # Create a unique cache key based on city name or coordinates 
-    cache_key = city_name 
-    if coordinates:
-        cache_key += f"_{coordinates[1]}_{coordinates[0]}"
+    if cache_key in cache and now - datetime.fromisoformat(cache[cache_key]['timestamp']) < CACHE_DURATION:
+        print("Loading weather from cache")
+        return cache[cache_key]['weather']
+    else:
+        print("Fetching new weather data")
+        weather_data = fetch_weather_data(city_name, latitude, longitude)
+        if weather_data:
+            cache[cache_key] = {'weather': weather_data, 'timestamp': now.isoformat()}
+            save_weather_cache(cache)
+            return weather_data
+        else:
+            return None
 
-    # Check if data in cache and not expired
-    if cache_key in cache['data'] and now - datetime.fromisoformat(cache['data'][cache_key]['timestamp']) < CACHE_DURATION:
-        print(f"Using cached weather data for {city_name}")
-        return cache['data'][cache_key]
-
-    # Fetch new weather data (using coordinates if provided)
-    weather_data = fetch_weather_data(city_name, coordinates=coordinates) 
-    if weather_data:
-        cache['data'][cache_key] = {'weather': weather_data, 'timestamp': now.isoformat()}
-        save_cache(cache)
-        return cache['data'][cache_key]
-    return None
-
-
-@app.route('/api/cities', methods=['GET'])
+@app.route('/api/cities')
 def get_cities():
+    """Returns a list of available city names."""
     cities = load_city_data()
-    sorted_cities = sorted(list(cities.keys())) # Sort city names alphabetically
-    return jsonify(sorted_cities) 
+    return jsonify(sorted(cities.keys()))
 
-@app.route('/api/city/<city>', methods=['GET'])
-def get_city_data(city):
-    city_name = city.lower()
+@app.route('/api/city/<city_name>')
+def get_city_info(city_name):
+    """Returns city information and weather data."""
+    city_name = city_name.lower()
     cities = load_city_data()
+
     if city_name in cities:
         city_info = cities[city_name]
-        weather_data = get_or_update_weather_cache(city_name)
-
-        if not weather_data:  # If fetching by name fails
-            coordinates = city_info.get('coordinates') 
-            if coordinates:
-                print(f"Trying to fetch weather using coordinates for {city_name}")
-                weather_data = get_or_update_weather_cache(city_name, coordinates=coordinates) 
+        weather_data = get_weather(city_name, city_info['latitude'], city_info['longitude'])
 
         if weather_data:
-            city_info.update({'weather': weather_data['weather']})
-            city_info.update({'weather_timestamp': weather_data['timestamp']})
-        return jsonify(city_info)
+            city_info['weather'] = weather_data
+            return jsonify(city_info)
+        else:
+            return jsonify({'error': 'Weather data not available'}), 500
     else:
-        return jsonify({"error": "City not found"}), 404
+        return jsonify({'error': 'City not found'}), 404
 
 @app.route('/api/predict', methods=['POST'])
 def predict():
+    """Returns a random prediction for the given city."""
     data = request.get_json()
     city_name = data.get('city', '').lower()
-    print(f"Prediction requested for city: {city_name}")
     if city_name:
-        prediction_result = random.random()  
+        prediction = random.random() 
+        return jsonify({'prediction': prediction})
     else:
-        prediction_result = "Error: City name not provided in the request."
-    return jsonify({"prediction": prediction_result})
-
+        return jsonify({'error': 'City name is required'}), 400
 
 if __name__ == '__main__':
     app.run(debug=True)
